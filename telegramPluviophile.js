@@ -38,7 +38,7 @@ const sendMsg = async (data) => {
       await config.bot[bot[config.botIndex].name].telegram.sendChatAction(config.opank, "typing")
       await config.bot[bot[config.botIndex].name].telegram.sendMessage(
         config.opank,
-        `${formattedText}\n\n${data.groupname}\n${data.username || data.name}`,
+        `${formattedText}\n\n😵‍💫 ${data.groupname}\n😍 ${data.username || data.name}`,
         {
           disable_web_page_preview: true,
           reply_markup: {
@@ -90,8 +90,9 @@ const main = () => {
           account: "Pluviophile",
         }
 
-        console.log(`\x1b[34m# ${data.account} ${data.id}\x1b[33m\n\n  from      : ${data.name}\n  username  : ${data.username}\n  groupname : ${data.groupname}\n  chat      : ${data.chat}\n\n\x1b[0m`)
-
+        console.log(
+          `\x1b[34m# ${data.account} ${data.id}\x1b[33m\n\n  from      : ${data.name}\n  username  : ${data.username}\n  groupname : ${data.groupname}\n  chat      : ${data.chat}\n\n\x1b[0m`
+        )
 
         if (ctx?.text && ctx?.entities) {
           if (ctx?.entities.map((x) => x.url).length > 0) {

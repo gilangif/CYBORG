@@ -39,7 +39,7 @@ const sendMsg = async (data) => {
       await config.bot[bot[config.botIndex].name].telegram.sendChatAction(config.opank, "typing")
       await config.bot[bot[config.botIndex].name].telegram.sendMessage(
         config.opank,
-        `${formattedText}\n\n${data.groupname}\n${data.username || data.name}`,
+        `${formattedText}\n\n😵‍💫 ${data.groupname}\n😍 ${data.username || data.name}`,
         {
           disable_web_page_preview: true,
           reply_markup: {

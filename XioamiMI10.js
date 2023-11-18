@@ -68,7 +68,7 @@ app.get("/", async (req, res) => {
         `  batch: ${msg.batch}\n  orderId: ${msg.orderId}\n  from: ${msg.from}\n  amount: \x1b[33m${msg.amount}\x1b[0m\n  comment: ${msg.comment}\n\n`
       )
 
-      if (msg.amount !== "UNKNOWN" && msg.orderId !== "UNKNOWN") {
+      if (msg.amount !== "UNKNOWN" && msg.orderId !== "UNKNOWN" && msg.from !== "UNKNOWN") {
         processStatus = true
 
         let text
