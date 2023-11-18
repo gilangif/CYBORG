@@ -1,0 +1,1 @@
+ssh -i ./cyborg.pem admin@ec2-13-228-27-241.ap-southeast-1.compute.amazonaws.com
