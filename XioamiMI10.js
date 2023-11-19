@@ -6,7 +6,7 @@ const axios = require("axios")
 const port = 3000
 const app = express()
 
-const SESSION = "GZ000DA5B6ED79E9444D8FA9180E26FD2274danabizpluginGZ00"
+const SESSION = "GZ007F7CECBE25114001A727B4442BA3464AdanabizpluginGZ00"
 
 let processStatus = false
 let processReply
@@ -22,6 +22,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.get("/", async (req, res) => {
+  const { exec } = require("child_process")
+
   processStatus = false
 
   try {
@@ -29,8 +31,6 @@ app.get("/", async (req, res) => {
 
     if (data && !logging[data]) {
       console.log(`\n\x1b[34m# ${processMode}\x1b[0m\n`)
-
-      logging[data] = data
 
       const { data: claim } = await axios.post(
         "https://m.dana.id/wallet/api/alipayplus.mobilewallet.transferluckymoney.claim.json",
@@ -56,6 +56,8 @@ app.get("/", async (req, res) => {
         }
       )
 
+      logging[data] = data
+
       const msg = {
         batch: data,
         orderId: claim?.result?.orderId || "UNKNOWN",
@@ -68,7 +70,7 @@ app.get("/", async (req, res) => {
         `  batch: ${msg.batch}\n  orderId: ${msg.orderId}\n  from: ${msg.from}\n  amount: \x1b[33m${msg.amount}\x1b[0m\n  comment: ${msg.comment}\n\n`
       )
 
-      if (msg.amount !== "UNKNOWN" && msg.orderId !== "UNKNOWN" && msg.from !== "UNKNOWN") {
+      if (msg.amount !== "UNKNOWN" && msg.orderId !== "UNKNOWN") {
         processStatus = true
 
         let text
@@ -80,6 +82,8 @@ app.get("/", async (req, res) => {
         if (parseInt(msg.amount.split(".").join("")) >= 100) text += " | @CYBORG_GIF"
 
         if (processMessage?.groupname === "O P A N K") processReply.reply(text)
+
+        exec(`termux-toast -b black -c white -g bottom "${text}"`, (error, stdout, stderr) => {})
       }
     } else {
       console.log("  Undefined, duplicate or error data.\n\n")
@@ -199,7 +203,7 @@ const task = async (data) => {
         processDelay = setTimeout(() => {
           processMode = "WAITING MODE"
           resolve()
-        }, 5000)
+        }, 5500)
 
         processChecker = setInterval(() => {
           if (processStatus) {
@@ -231,23 +235,39 @@ const bot = new Snake({
 
 bot.run()
 
+bot.command("check", async (ctx) => {
+  try {
+    const { exec } = require("child_process")
+
+    exec(`termux-battery-status`, (error, stdout, stderr) => {
+      if (stdout) {
+        const battery = JSON.parse(stdout)
+
+        ctx.reply(`BATTERY: ${battery.health} ${battery.percentage}%, ${battery.plugged} ${battery.status} ${battery.temperature} C`)
+      }
+    })
+  } catch (error) {
+    console.log("COMMAND ERROR")
+  }
+})
+
 bot.on("message", (ctx) => {
   let data = {
     id: ctx?.id,
     chat: ctx?.text,
-    name: (ctx?.from?.firstName ? ctx?.from?.firstName + " " : "" + ctx?.from?.lastName ? ctx?.from?.lastName : "").trim() || "Anonymous",
+    name: (ctx?.from?.firstName ? ctx?.from?.firstName + " " : "" + ctx?.from?.lastName ? ctx?.from?.lastName : "") || "Anonymous",
     username: ctx?.from?.username,
     groupname: ctx?.chat?.title || "PERSONAL CHAT",
   }
 
   const link = data?.chat?.match(/link\.dana\S+/g)
 
-  if (data?.groupname !== "OYENNN" && link) {
+  if (data?.groupname !== "OYENNN" && data?.groupname !== "AMONNN" && link) {
     link.forEach((x) => queue.push({ url: x, ctx, message: data }))
   }
 })
 
 setInterval(() => {
-  console.log("# WAKEUP PROGRAM\n\n")
+  console.log("\n\x1b[34m# WAKEUP PROGRAM\x1b[0m\n")
   queue.push({ url: "link.dana.id/kaget?c=xxxxxx", ctx: "test" })
 }, 1500000)

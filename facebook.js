@@ -7,7 +7,7 @@ let groups = require("./data/facebook.json")
 let logsFile = "./logs/logsFacebook.json"
 let logs = require(logsFile)
 
-const config = { post: 15, comment: 20, logs: 300, limit: 100, botIndex: 0, bot: {}, opank: "-1001962626950", oyen: "-1001909548840" }
+const config = { post: 30, comment: 20, logs: 300, limit: 100, botIndex: 0, bot: {}, opank: "-1001962626950", oyen: "-1001909548840" }
 const bot = [
   { name: "Timmy", token: "6107155056:AAHD_thIjVila1NoMfJKwVoXbeJEuyOyG_k" },
   { name: "Shiro", token: "6886385156:AAFXXiIVSjY4CNt40X5XcCeKIvDPWMls2hA" },

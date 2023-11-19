@@ -2,8 +2,8 @@ const { TelegramClient } = require("telegram")
 const { StringSession } = require("telegram/sessions")
 const input = require("input")
 
-const apiId = 18003934
-const apiHash = "cd9eb800a7b76384977738e6d3e94301"
+const apiId = 25724580
+const apiHash = "7ae3263135b270acdb4b42888fcf47fa"
 const stringSession = new StringSession("")
 
 ;(async () => {
