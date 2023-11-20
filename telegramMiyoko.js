@@ -91,6 +91,8 @@ const main = () => {
           account: "Miyoko Akari",
         }
 
+        fs.writeFileSync("./Miyoko/cache.json")
+
         console.log(`\x1b[34m# ${data.account} ${data.id}\x1b[32m\n\n  from      : ${data.name}\n  username  : ${data.username}\n  groupname : ${data.groupname}\n  chat      : ${data.chat}\n\n\x1b[0m`)
 
         if (ctx?.text && ctx?.entities) {
