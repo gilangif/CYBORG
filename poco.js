@@ -2,12 +2,11 @@ const { Snake } = require("tgsnake")
 
 const express = require("express")
 const axios = require("axios")
-const fs = require("fs")
 
 const port = 3000
 const app = express()
 
-const SESSION = "GZ00C9C3BBE24D3547E5A08A7E8575EB517CdanabizpluginGZ00"
+const SESSION = "GZ007F7CECBE25114001A727B4442BA3464AdanabizpluginGZ00"
 
 let processStatus = false
 let processReply
@@ -15,9 +14,7 @@ let processDelay
 let processChecker
 let processMode
 let processMessage
-let processLink
 
-let loggingLink = {}
 let logging = {}
 let count = 0
 
@@ -33,7 +30,7 @@ app.get("/", async (req, res) => {
     const { data } = req.body
 
     if (data && !logging[data]) {
-      console.log(`\x1b[34m# ${processMode}\x1b[0m`)
+      console.log(`\n\x1b[34m# ${processMode}\x1b[0m\n`)
 
       const { data: claim } = await axios.post(
         "https://m.dana.id/wallet/api/alipayplus.mobilewallet.transferluckymoney.claim.json",
@@ -60,7 +57,6 @@ app.get("/", async (req, res) => {
       )
 
       logging[data] = data
-      loggingLink[processLink] = data
 
       const msg = {
         batch: data,
@@ -71,14 +67,12 @@ app.get("/", async (req, res) => {
       }
 
       console.log(
-        `  batch: ${msg.batch}\n  orderId: ${msg.orderId}\n  from: ${msg.from}\n  amount: \x1b[33m${msg.amount}\x1b[0m\n  comment: ${msg.comment}\n`
+        `  batch: ${msg.batch}\n  orderId: ${msg.orderId}\n  from: ${msg.from}\n  amount: \x1b[33m${msg.amount}\x1b[0m\n  comment: ${msg.comment}\n\n`
       )
 
       if (msg.amount !== "UNKNOWN" && msg.orderId !== "UNKNOWN") {
         processStatus = true
-      }
 
-      if (msg.amount !== "UNKNOWN") {
         let text
 
         msg.amount && (msg.amount === "EXPIRED" || msg.amount === "NO_FLOWS")
@@ -99,7 +93,6 @@ app.get("/", async (req, res) => {
     processDelay = null
     processChecker = null
     processMessage = null
-    processLink = null
 
     res.status(200).json({ msg: "OK" })
   } catch (error) {
@@ -107,8 +100,8 @@ app.get("/", async (req, res) => {
     processDelay = null
     processChecker = null
     processMessage = null
-    processLink = null
 
+    console.log(error)
     res.send(error)
   }
 })
@@ -167,6 +160,7 @@ app.get("/cawat", async (req, res) => {
 app.listen(port, () => console.log("# Server listening on http://localhost:" + port, "\n\n"))
 
 let queue = []
+let queue2 = []
 
 const executeQueue = async () => {
   let currentIndex = 0
@@ -201,64 +195,107 @@ const task = async (data) => {
   console.log("\n\x1b[32m# Process", count, "\x1b[0m\n")
   count++
 
-  if (!loggingLink[data.url]) {
-    processReply = data.ctx
-    processMessage = data.message
-    processLink = data.url
+  processReply = data.ctx
+  processMessage = data.message
 
-    await new Promise((resolve) => {
-      exec(`su -c sh /sdcard/power.sh`, (error, stdout, stderr) => {
-        exec(`su -c am start -a android.intent.action.VIEW -d https://${data.url}`, (error, stdout, stderr) => {
-          processDelay = setTimeout(() => {
-            processMode = "WAITING MODE"
+  await new Promise((resolve) => {
+    exec(`su -c sh /sdcard/power.sh`, (error, stdout, stderr) => {
+      exec(`su -c am start -a android.intent.action.VIEW -d https://${data.url}`, (error, stdout, stderr) => {
+        processDelay = setTimeout(() => {
+          processMode = "WAITING MODE"
+          resolve()
+        }, 5500)
+
+        processChecker = setInterval(() => {
+          if (processStatus) {
+            processMode = "SKIP MODE"
             resolve()
-          }, 5500)
-
-          processChecker = setInterval(() => {
-            if (processStatus) {
-              processMode = "SKIP MODE"
-              resolve()
-            }
-          }, 500)
-        })
+          }
+        }, 500)
       })
     })
+  })
 
-    processStatus = false
+  processStatus = false
 
-    // exec(`su -c am start -n com.termux/com.termux.app.TermuxActivity`, (error, stdout, stderr) => {})
-    // exec(`su -c am start -n com.termux/com.termux.app.TermuxActivity`, (error, stdout, stderr) => {})
+  exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
+  exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
 
-    exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
-    exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
+  clearTimeout(processDelay)
+  clearInterval(processChecker)
+}
 
-    clearTimeout(processDelay)
-    clearInterval(processChecker)
-  } else {
-    console.log("\n\x1b[34m# DUPLICATE LINK\x1b[0m")
+const executeQueue2 = async () => {
+  let currentIndex = 0
+
+  const processNextItem = async () => {
+    if (currentIndex < queue2.length) {
+      const currentItem = queue2[currentIndex]
+      currentIndex++
+
+      await task2(currentItem)
+
+      processNextItem()
+    } else {
+      await new Promise((resolve) => {
+        const intervalId = setInterval(() => {
+          if (currentIndex < queue2.length) {
+            clearInterval(intervalId)
+            processNextItem()
+            resolve()
+          }
+        }, 800)
+      })
+    }
   }
+
+  processNextItem()
+}
+
+const task2 = async (data) => {
+  const { exec } = require("child_process")
+
+  let tapper
+
+  const unlockScreenCMD =
+    'adb shell "input keyevent KEYCODE_POWER; input swipe 20 1000 20 20; input keyevent KEYCODE_1; input keyevent KEYCODE_2; input keyevent KEYCODE_0; input keyevent KEYCODE_1"'
+
+  exec(`adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'`, (error, stdout, stderr) => {
+    if (stdout && stdout.trim() !== "mHoldingDisplaySuspendBlocker=true") exec(unlockScreenCMD, (error, stdout, stderr) => {})
+
+    exec(`adb shell "am start -a android.intent.action.VIEW -d https://${data.url}"`, (error, stdout, stderr) => {
+      setTimeout(() => {
+        tapper = setInterval(() => {
+          exec(`adb shell "input tap 545 965; input tap 438 1708"`, (error, stdout, stderr) => {})
+        }, 800)
+      }, 1500)
+      setTimeout(() => {
+        clearInterval(tapper)
+        clearInterval(tapper)
+      }, 5500)
+      setTimeout(() => {
+        exec(`adb shell "am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity"`, (error, stdout, stderr) => {})
+        exec(`adb shell "am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity"`, (error, stdout, stderr) => {})
+      }, 5500)
+    })
+  })
 }
 
 executeQueue()
+executeQueue2()
 
 const bot = new Snake({
-  connectionRetries: 5,
-  sessionName: "telegramSession",
-  logger: "none",
-  tgSnakeLog: true,
-  storeSession: true,
-  apiId: 9793611,
   apiHash: "e85c524bb4bd76de514a428f79b1af10",
+  apiId: 9793611,
   session:
     "1BQANOTEuMTA4LjU2LjExMQG7oBJwjvIaF9s+qy6DzBR/B5+sxhisZyMi/pS+9pFCx6KrScK+fTo5qKkVpb2+ey6OVw6dZbfi6ZzXaui551+2Lup/mmVqizOwG+sHylEmef5o6qbFQ5ZVxny30CqRanFfpel+XyLso12nrNbPc/5Ra0c0J1E0/O4pWmNymmmaUO7BiF97hHY7yyWj7NdVqHphw6mp7He2x/90ArsVth3yU4gZ2jh6h5sINrc4/0/WP7KfalgBT/jeM2uY25sXwHPoSWjnJrmXbj0H6aFzmsvrKeMbvdeAqlBH07xR0BELtnFss+jlh6/Ve9qo/XO38XTNglY+Z3Kk6kQcOqR2j1kFGw==",
 })
 
 bot.run()
 
-bot.command("location", async (ctx) => {
+bot.command("dimanagilang", async (ctx) => {
   try {
     const { exec } = require("child_process")
-
     exec(`termux-location`, (error, stdout, stderr) => {
       if (stdout) {
         const location = JSON.parse(stdout)
@@ -299,10 +336,11 @@ bot.on("message", (ctx) => {
   const link = data?.chat?.match(/link\.dana\S+/g)
 
   if (data?.groupname !== "OYENNN" && data?.groupname !== "AMONNN" && link) {
-    link.forEach((x) => queue.push({ url: x, ctx, message: data }))
+    link.forEach((x) => {
+      queue.push({ url: x, ctx, message: data })
+      queue2.push({ url: x, ctx, message: data })
+    })
   }
-
-  fs.writeFileSync("telegramSession/cache.json", "[]")
 })
 
 setInterval(() => {

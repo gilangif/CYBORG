@@ -69,7 +69,7 @@ const bot = new Snake({
 
 bot.run()
 
-bot.command("bobycheck", async (ctx) => {
+bot.command("battery", async (ctx) => {
   try {
     const { exec } = require("child_process")
 
@@ -77,9 +77,42 @@ bot.command("bobycheck", async (ctx) => {
       if (stdout) {
         const battery = JSON.parse(stdout)
 
-        ctx.reply(`BATTERY: ${battery.health} ${battery.percentage}%, ${battery.plugged} ${battery.status} ${battery.temperature} C`)
+        ctx.reply(`Xiaomi MI 8 Lite : ${battery.percentage}% ${battery.health}, ${battery.plugged} ${battery.status} ${battery.temperature} C`)
       }
     })
+  } catch (error) {
+    console.log("COMMAND ERROR")
+  }
+})
+
+bot.command("dimanaboby", async (ctx) => {
+  try {
+    const { exec } = require("child_process")
+    exec(`termux-location`, (error, stdout, stderr) => {
+      if (stdout) {
+        const location = JSON.parse(stdout)
+
+        ctx.reply(`# Chuwnwen check location...\n\nhttps://www.google.com/maps?q=${location?.latitude},${location.longitude}`)
+      }
+    })
+  } catch (error) {
+    console.log("COMMAND ERROR")
+  }
+})
+
+bot.command("vdown", async (ctx) => {
+  try {
+    const { exec } = require("child_process")
+    exec(`su -c input keyevent KEYCODE_VOLUME_DOWN`, (error, stdout, stderr) => {})
+  } catch (error) {
+    console.log("COMMAND ERROR")
+  }
+})
+
+bot.command("vup", async (ctx) => {
+  try {
+    const { exec } = require("child_process")
+    exec(`su -c input keyevent KEYCODE_VOLUME_UP`, (error, stdout, stderr) => {})
   } catch (error) {
     console.log("COMMAND ERROR")
   }
