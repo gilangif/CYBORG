@@ -35,7 +35,7 @@ const sendMsg = async (data) => {
     if (!logs.find((x) => x.chat === data.chat) && data.groupname !== "OYENNN" && data.groupname !== "O P A N K") {
       const formattedText = data?.chat?.replace(/(https?:\/\/)?(link\.dana\.id\/[^\s]+)/gi, " https://$2")
 
-      await config.bot[bot[config.botIndex].name].telegram.sendChatAction(config.opank, "typing")
+      config.bot[bot[config.botIndex].name].telegram.sendChatAction(config.opank, "typing")
       await config.bot[bot[config.botIndex].name].telegram.sendMessage(
         config.opank,
         `${formattedText}\n\n😵‍💫 ${data.groupname}\n😍 ${data.username || data.name}`,

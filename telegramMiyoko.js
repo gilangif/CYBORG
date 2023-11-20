@@ -36,7 +36,7 @@ const sendMsg = async (data) => {
     if (!logs.find((x) => x.chat === data.chat) && data.groupname !== "OYENNN" && data.groupname !== "O P A N K") {
       const formattedText = data?.chat?.replace(/(https?:\/\/)?(link\.dana\.id\/[^\s]+)/gi, " https://$2")
 
-      await config.bot[bot[config.botIndex].name].telegram.sendChatAction(config.opank, "typing")
+      config.bot[bot[config.botIndex].name].telegram.sendChatAction(config.opank, "typing")
       await config.bot[bot[config.botIndex].name].telegram.sendMessage(
         config.opank,
         `${formattedText}\n\n😵‍💫 ${data.groupname}\n😍 ${data.username || data.name}`,
@@ -93,7 +93,9 @@ const main = () => {
 
         fs.writeFileSync("./Miyoko/cache.json")
 
-        console.log(`\x1b[34m# ${data.account} ${data.id}\x1b[32m\n\n  from      : ${data.name}\n  username  : ${data.username}\n  groupname : ${data.groupname}\n  chat      : ${data.chat}\n\n\x1b[0m`)
+        console.log(
+          `\x1b[34m# ${data.account} ${data.id}\x1b[32m\n\n  from      : ${data.name}\n  username  : ${data.username}\n  groupname : ${data.groupname}\n  chat      : ${data.chat}\n\n\x1b[0m`
+        )
 
         if (ctx?.text && ctx?.entities) {
           if (ctx?.entities.map((x) => x.url).length > 0) {
