@@ -60,14 +60,22 @@ const task = async (url) => {
 executeQueue()
 
 const bot = new Snake({
-  apiHash: "7ae3263135b270acdb4b42888fcf47fa",
-  apiId: 25724580,
+  apiHash: "ee3fb758d3e90a2bfd8202cf4ad4dce5",
+  apiId: 22021572,
   logger: "none",
   session:
-    "1BQANOTEuMTA4LjU2LjE0MQG7mHkay4hLPG3sb/hLvPKMA57HIooVp3IQ8eER5Q2QsQyeLjaEPNeVn1U+3zU2zvqR9E00nY+DSDC3IwfyQuhgAf762b17ndkzf7El431dK2HfiIzOUNpyiWyHDQ3Dh/yuJzpxWqzAHTAE4CfczlIs5guu1lYwEA77KC877vpW82sBL90tXdtfEYHsD6XPHWkIOFxFNVcE4B+AUHcC8Zl0pFlHwYkrzS9GuVlUWpqrdekws9rUQ74DkiWKV/KN38sk6wKoXD+hApYzISh6GTOFHrxPYZw+5E4AoAtUDppEu4fNV5MNfje5PLQZbmIeUqHAtReozmdVJcNsIeS6gtzpHQ==",
+    "1BQANOTEuMTA4LjU2LjE0OAG7OjfXVCsgAQhKPA41oBXl8KlZUYAlOIoCp8zPP8MF9bcY+BM0bV1tVu8xTzzSq6+TEwwGDbrlBhsjwYEHtFE1EJkvp8B01AQVT+AZiebKQSfUqcr1EPahbN4vPJukgpudEpCJSMBjDx++66HFZJbOjNcF/m1/qzKOxb8Tz9NwDFrlOYYeMRAIeS5XmoccmTE1uBu0Mj0H5f3IOTaf6Kl2BCzH62TCTY3iI3LfMfipLtduo1I76A9JJyQGPOzVqJZJYSTd1JdnhDUqPFMU5p6LxskPWIvqzLZ+zt3ighmNNWtplHYCXWu1rsy3LRvQdhd1r3umlFBr7jV8jLChr0E9bQ==",
 })
 
 bot.run()
+
+bot.command("test", async (ctx) => {
+  try {
+    ctx.reply(`User Bot Active!`)
+  } catch (error) {
+    console.log("COMMAND ERROR")
+  }
+})
 
 bot.command("battery", async (ctx) => {
   try {
@@ -85,7 +93,7 @@ bot.command("battery", async (ctx) => {
   }
 })
 
-bot.command("dimanaboby", async (ctx) => {
+bot.command("locationboby", async (ctx) => {
   try {
     const { exec } = require("child_process")
     exec(`termux-location`, (error, stdout, stderr) => {

@@ -1,0 +1,158 @@
+� debug - Load Entities from local cache
+� debug - Creating client
+� debug - Creating session
+� debug - Converting string session to store session.
+[2023-11-24T08:03:56.812] [INFO] - [Running gramJS version 2.19.3]
+� Welcome To TGSNAKE 2.1.0.
+� Setting Logger level to "debug"
+[2023-11-24T08:03:56.815] [INFO] - [Connecting to 91.108.56.111:80/TCPFull...]
+[2023-11-24T08:03:56.816] [DEBUG] - [Connecting]
+[2023-11-24T08:03:56.870] [DEBUG] - [Finished connecting]
+[2023-11-24T08:03:56.871] [DEBUG] - [Connection success!]
+[2023-11-24T08:03:56.872] [DEBUG] - [Already have an auth key ...]
+[2023-11-24T08:03:56.872] [DEBUG] - [Starting send loop]
+[2023-11-24T08:03:56.872] [DEBUG] - [Waiting for messages to send... false]
+[2023-11-24T08:03:56.873] [DEBUG] - [Starting receive loop]
+[2023-11-24T08:03:56.873] [DEBUG] - [Receiving items from the network...]
+[2023-11-24T08:03:56.873] [INFO] - [Connection to 91.108.56.111:80/TCPFull complete!]
+[2023-11-24T08:03:56.875] [INFO] - [Using LAYER 160 for initial connect]
+[2023-11-24T08:03:56.877] [DEBUG] - [Send InvokeWithLayer]
+[2023-11-24T08:03:56.878] [DEBUG] - [Assigned msgId = 7304828136562611828 to InvokeWithLayer]
+[2023-11-24T08:03:56.878] [DEBUG] - [Got 1 message(s) to send]
+[2023-11-24T08:03:56.878] [DEBUG] - [Encrypting 1 message(s) in 84 bytes for sending]
+[2023-11-24T08:03:56.878] [DEBUG] - [Sending   InvokeWithLayer]
+[2023-11-24T08:03:56.881] [DEBUG] - [Encrypted messages put in a queue to be sent]
+[2023-11-24T08:03:56.881] [DEBUG] - [Waiting for messages to send... false]
+[2023-11-24T08:03:56.945] [DEBUG] - [Handling bad salt for message 7304828136562611828]
+[2023-11-24T08:03:56.946] [DEBUG] - [1 message(s) will be resent]
+[2023-11-24T08:03:56.946] [DEBUG] - [Receiving items from the network...]
+[2023-11-24T08:03:56.947] [DEBUG] - [Assigned msgId = 7304828136838611852 to InvokeWithLayer]
+[2023-11-24T08:03:56.947] [DEBUG] - [Assigned msgId = 7304828136842611560 to MsgsAck]
+[2023-11-24T08:03:56.947] [DEBUG] - [Got 2 message(s) to send]
+[2023-11-24T08:03:56.947] [DEBUG] - [Encrypting 2 message(s) in 144 bytes for sending]
+[2023-11-24T08:03:56.947] [DEBUG] - [Sending   InvokeWithLayer,MsgsAck]
+[2023-11-24T08:03:56.948] [DEBUG] - [Encrypted messages put in a queue to be sent]
+[2023-11-24T08:03:56.948] [DEBUG] - [Waiting for messages to send... false]
+[2023-11-24T08:03:56.993] [DEBUG] - [Handling container]
+[2023-11-24T08:03:56.993] [DEBUG] - [Handling new session created]
+[2023-11-24T08:03:56.994] [DEBUG] - [Receiving items from the network...]
+[2023-11-24T08:03:57.011] [DEBUG] - [Handling RPC result for message 7304828136838611852]
+[2023-11-24T08:03:57.012] [DEBUG] - [Handling RPC result VirtualClass]
+[2023-11-24T08:03:57.013] [DEBUG] - [Receiving items from the network...]
+� debug - Running telegram.getEntity
+� debug - Entity not available in cache, so we fetching fresh data from telegram.
+[2023-11-24T08:03:57.015] [DEBUG] - [Assigned msgId = 7304828137409579168 to users.GetUsers]
+[2023-11-24T08:03:57.016] [DEBUG] - [Assigned msgId = 7304828137413578880 to MsgsAck]
+[2023-11-24T08:03:57.016] [DEBUG] - [Got 2 message(s) to send]
+[2023-11-24T08:03:57.016] [DEBUG] - [Encrypting 2 message(s) in 116 bytes for sending]
+[2023-11-24T08:03:57.016] [DEBUG] - [Sending   users.GetUsers,MsgsAck]
+[2023-11-24T08:03:57.017] [DEBUG] - [Encrypted messages put in a queue to be sent]
+[2023-11-24T08:03:57.017] [DEBUG] - [Waiting for messages to send... false]
+[2023-11-24T08:03:57.076] [DEBUG] - [Handling RPC result for message 7304828137409579168]
+[2023-11-24T08:03:57.077] [DEBUG] - [Handling RPC result Array]
+[2023-11-24T08:03:57.077] [DEBUG] - [Receiving items from the network...]
+� debug - Creating ResultGetEntity
+� debug - Creating MediaChatPhoto
+� debug - Caching ResultGetEntity
+� Connected as  I'm Cyborg but It's Okay! [572191161]
+� debug - Receive update (ResultGetEntity)
+[2023-11-24T08:04:06.029] [DEBUG] - [Send PingDelayDisconnect]
+[2023-11-24T08:04:06.030] [DEBUG] - [Assigned msgId = 7304828176124284300 to PingDelayDisconnect]
+[2023-11-24T08:04:06.030] [DEBUG] - [Assigned msgId = 7304828176124284304 to MsgsAck]
+[2023-11-24T08:04:06.030] [DEBUG] - [Got 2 message(s) to send]
+[2023-11-24T08:04:06.030] [DEBUG] - [Encrypting 2 message(s) in 92 bytes for sending]
+[2023-11-24T08:04:06.030] [DEBUG] - [Sending   PingDelayDisconnect,MsgsAck]
+[2023-11-24T08:04:06.031] [DEBUG] - [Encrypted messages put in a queue to be sent]
+[2023-11-24T08:04:06.032] [DEBUG] - [Waiting for messages to send... false]
+[2023-11-24T08:04:06.075] [DEBUG] - [Handling pong for message 7304828176124284300]
+[2023-11-24T08:04:06.075] [DEBUG] - [Receiving items from the network...]
+[2023-11-24T08:04:08.776] [DEBUG] - [Handling update UpdateShort]
+[2023-11-24T08:04:08.776] [DEBUG] - [Receiving items from the network...]
+� debug - Receive update UpdateUserStatus
+� debug - Creating updateUserStatus
+� debug - Creating User 572191161
+� debug - Running telegram.getEntity
+� debug - Entity already in cache, so we use it, not fetching fresh data from telegram.
+� debug - Receive updateUserStatus
+[2023-11-24T08:04:15.086] [DEBUG] - [Send PingDelayDisconnect]
+[2023-11-24T08:04:15.087] [DEBUG] - [Assigned msgId = 7304828215006989652 to PingDelayDisconnect]
+[2023-11-24T08:04:15.087] [DEBUG] - [Assigned msgId = 7304828215006989656 to MsgsAck]
+[2023-11-24T08:04:15.088] [DEBUG] - [Got 2 message(s) to send]
+[2023-11-24T08:04:15.088] [DEBUG] - [Encrypting 2 message(s) in 100 bytes for sending]
+[2023-11-24T08:04:15.088] [DEBUG] - [Sending   PingDelayDisconnect,MsgsAck]
+[2023-11-24T08:04:15.090] [DEBUG] - [Encrypted messages put in a queue to be sent]
+[2023-11-24T08:04:15.090] [DEBUG] - [Waiting for messages to send... false]
+[2023-11-24T08:04:15.145] [DEBUG] - [Handling pong for message 7304828215006989652]
+[2023-11-24T08:04:15.145] [DEBUG] - [Receiving items from the network...]
+[2023-11-24T08:04:17.529] [DEBUG] - [Handling update UpdateShort]
+� debug - Receive update UpdateUserStatus
+� debug - Creating updateUserStatus
+� debug - Creating User 572191161
+� debug - Running telegram.getEntity
+� debug - Entity already in cache, so we use it, not fetching fresh data from telegram.
+[2023-11-24T08:04:17.531] [DEBUG] - [Receiving items from the network...]
+� debug - Receive updateUserStatus
+[2023-11-24T08:04:21.286] [DEBUG] - [Handling update UpdateShort]
+� debug - Receive update UpdateUserStatus
+� debug - Creating updateUserStatus
+� debug - Creating User 572191161
+� debug - Running telegram.getEntity
+� debug - Entity already in cache, so we use it, not fetching fresh data from telegram.
+[2023-11-24T08:04:21.288] [DEBUG] - [Receiving items from the network...]
+� debug - Receive updateUserStatus
+[2023-11-24T08:04:21.961] [DEBUG] - [Handling update UpdateShort]
+� debug - Receive update UpdateChatUserTyping
+� debug - Creating updateChatUserTyping
+� debug - Creating User 6788357813
+� debug - Running telegram.getEntity
+� debug - Entity not available in cache, so we fetching fresh data from telegram.
+[2023-11-24T08:04:21.964] [DEBUG] - [Receiving items from the network...]
+[2023-11-24T08:04:21.966] [DEBUG] - [Assigned msgId = 7304828244292794176 to users.GetUsers]
+[2023-11-24T08:04:21.966] [DEBUG] - [Assigned msgId = 7304828244292794180 to MsgsAck]
+[2023-11-24T08:04:21.967] [DEBUG] - [Got 2 message(s) to send]
+[2023-11-24T08:04:21.967] [DEBUG] - [Encrypting 2 message(s) in 132 bytes for sending]
+[2023-11-24T08:04:21.967] [DEBUG] - [Sending   users.GetUsers,MsgsAck]
+[2023-11-24T08:04:21.968] [DEBUG] - [Encrypted messages put in a queue to be sent]
+[2023-11-24T08:04:21.968] [DEBUG] - [Waiting for messages to send... false]
+[2023-11-24T08:04:22.018] [DEBUG] - [Handling RPC result for message 7304828244292794176]
+[2023-11-24T08:04:22.019] [DEBUG] - [Handling RPC result Array]
+[2023-11-24T08:04:22.019] [DEBUG] - [Receiving items from the network...]
+� debug - Creating ResultGetEntity
+� debug - Caching ResultGetEntity
+� debug - Creating Chat 4084683464
+� debug - Running telegram.getEntity
+� debug - Entity not available in cache, so we fetching fresh data from telegram.
+[2023-11-24T08:04:22.022] [DEBUG] - [Assigned msgId = 7304828244811761448 to users.GetUsers]
+[2023-11-24T08:04:22.022] [DEBUG] - [Assigned msgId = 7304828244811761452 to MsgsAck]
+[2023-11-24T08:04:22.023] [DEBUG] - [Got 2 message(s) to send]
+[2023-11-24T08:04:22.023] [DEBUG] - [Encrypting 2 message(s) in 108 bytes for sending]
+[2023-11-24T08:04:22.023] [DEBUG] - [Sending   users.GetUsers,MsgsAck]
+[2023-11-24T08:04:22.024] [DEBUG] - [Encrypted messages put in a queue to be sent]
+[2023-11-24T08:04:22.024] [DEBUG] - [Waiting for messages to send... false]
+[2023-11-24T08:04:22.062] [DEBUG] - [Handling RPC result for message 7304828244811761448]
+[2023-11-24T08:04:22.062] [DEBUG] - [Handling RPC result Array]
+[2023-11-24T08:04:22.062] [DEBUG] - [Receiving items from the network...]
+� debug - Creating ResultGetEntity
+� debug - Caching ResultGetEntity
+� debug - Receive updateChatUserTyping
+[2023-11-24T08:04:22.313] [DEBUG] - [Handling gzipped data]
+[2023-11-24T08:04:22.315] [DEBUG] - [Handling update Updates]
+� debug - Add or Update Entities (6788357813) to cache.
+� debug - Creating MediaChatPhoto
+[2023-11-24T08:04:22.316] [DEBUG] - [Receiving items from the network...]
+node:internal/buffer:583
+  let lo = Number(value & 0xffffffffn);
+                        ^
+
+TypeError: Cannot mix BigInt and other types, use explicit conversions
+    at writeBigU_Int64LE (node:internal/buffer:583:25)
+    at Buffer.writeBigInt64LE (node:internal/buffer:633:10)
+    at Util.to64bitBuffer (D:\CYBORG\CYBORG\node_modules\tg-file-id\dist\Util.js:111:13)
+    at FileId.toFileId (D:\CYBORG\CYBORG\node_modules\tg-file-id\dist\FileId.js:114:43)
+    at MediaChatPhoto.encode (D:\CYBORG\CYBORG\node_modules\tgsnake\lib\Utils\Medias\ChatPhoto.js:47:34)
+    at ResultGetEntity.init (D:\CYBORG\CYBORG\node_modules\tgsnake\lib\Telegram\Users\GetEntity.js:130:34)
+    at SnakeEvent.build (D:\CYBORG\CYBORG\node_modules\tgsnake\lib\Events\SnakeEvents.js:25:32)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async _dispatchUpdate (D:\CYBORG\CYBORG\node_modules\tgsnake\node_modules\telegram\client\updates.js:139:32)
+
+Node.js v20.4.0

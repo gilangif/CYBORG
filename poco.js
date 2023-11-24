@@ -6,7 +6,7 @@ const axios = require("axios")
 const port = 3000
 const app = express()
 
-const SESSION = "GZ007F7CECBE25114001A727B4442BA3464AdanabizpluginGZ00"
+const SESSION = "GZ00C9C3BBE24D3547E5A08A7E8575EB517CdanabizpluginGZ00"
 
 let processStatus = false
 let processReply
@@ -14,7 +14,9 @@ let processDelay
 let processChecker
 let processMode
 let processMessage
+let processLink
 
+let loggingLink = {}
 let logging = {}
 let count = 0
 
@@ -57,6 +59,7 @@ app.get("/", async (req, res) => {
       )
 
       logging[data] = data
+      loggingLink[processLink] = data
 
       const msg = {
         batch: data,
@@ -93,6 +96,7 @@ app.get("/", async (req, res) => {
     processDelay = null
     processChecker = null
     processMessage = null
+    processLink = null
 
     res.status(200).json({ msg: "OK" })
   } catch (error) {
@@ -100,8 +104,8 @@ app.get("/", async (req, res) => {
     processDelay = null
     processChecker = null
     processMessage = null
+    processLink = null
 
-    console.log(error)
     res.send(error)
   }
 })
@@ -195,34 +199,40 @@ const task = async (data) => {
   console.log("\n\x1b[32m# Process", count, "\x1b[0m\n")
   count++
 
-  processReply = data.ctx
-  processMessage = data.message
+  if (!loggingLink[data.url]) {
+    processReply = data.ctx
+    processMessage = data.message
+    processLink = data.url
 
-  await new Promise((resolve) => {
-    exec(`su -c sh /sdcard/power.sh`, (error, stdout, stderr) => {
-      exec(`su -c am start -a android.intent.action.VIEW -d https://${data.url}`, (error, stdout, stderr) => {
-        processDelay = setTimeout(() => {
-          processMode = "WAITING MODE"
-          resolve()
-        }, 5500)
-
-        processChecker = setInterval(() => {
-          if (processStatus) {
-            processMode = "SKIP MODE"
+    await new Promise((resolve) => {
+      exec(`su -c sh /sdcard/power.sh`, (error, stdout, stderr) => {
+        exec(`su -c am start -a android.intent.action.VIEW -d https://${data.url}`, (error, stdout, stderr) => {
+          processDelay = setTimeout(() => {
+            processMode = "WAITING MODE"
             resolve()
-          }
-        }, 500)
+          }, 5500)
+
+          processChecker = setInterval(() => {
+            if (processStatus) {
+              processMode = "SKIP MODE"
+              resolve()
+            }
+          }, 500)
+        })
       })
     })
-  })
 
-  processStatus = false
+    processStatus = false
 
-  exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
-  exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
+    exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
+    exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
 
-  clearTimeout(processDelay)
-  clearInterval(processChecker)
+    clearTimeout(processDelay)
+    clearInterval(processChecker)
+  } else {
+    data.ctx.reply("Oopss Duplicate !")
+    console.log("\n\x1b[34m# DUPLICATE LINK\x1b[0m")
+  }
 }
 
 const executeQueue2 = async () => {
@@ -257,16 +267,17 @@ const task2 = async (data) => {
 
   let tapper
 
-  const unlockScreenCMD =
-    'adb shell "input keyevent KEYCODE_POWER; input swipe 20 1000 20 20; input keyevent KEYCODE_1; input keyevent KEYCODE_2; input keyevent KEYCODE_0; input keyevent KEYCODE_1"'
+  exec(`su -c adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'`, (error, stdout, stderr) => {
+    if (stdout && stdout.trim() !== "mHoldingDisplaySuspendBlocker=true") {
+      exec(`su -c adb shell "input keyevent KEYCODE_POWER"`, (error, stdout, stderr) => {
+        exec(`su -c adb shell "input swipe 20 800 20 20"`, (error, stdout, stderr) => {})
+      })
+    }
 
-  exec(`adb shell dumpsys power | grep 'mHoldingDisplaySuspendBlocker'`, (error, stdout, stderr) => {
-    if (stdout && stdout.trim() !== "mHoldingDisplaySuspendBlocker=true") exec(unlockScreenCMD, (error, stdout, stderr) => {})
-
-    exec(`adb shell "am start -a android.intent.action.VIEW -d https://${data.url}"`, (error, stdout, stderr) => {
+    exec(`su -c adb shell "am start -a android.intent.action.VIEW -d https://${data.url}"`, (error, stdout, stderr) => {
       setTimeout(() => {
         tapper = setInterval(() => {
-          exec(`adb shell "input tap 545 965; input tap 438 1708"`, (error, stdout, stderr) => {})
+          exec(`su -c adb shell "input tap 545 965; input tap 438 1708"`, (error, stdout, stderr) => {})
         }, 800)
       }, 1500)
       setTimeout(() => {
@@ -274,9 +285,9 @@ const task2 = async (data) => {
         clearInterval(tapper)
       }, 5500)
       setTimeout(() => {
-        exec(`adb shell "am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity"`, (error, stdout, stderr) => {})
-        exec(`adb shell "am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity"`, (error, stdout, stderr) => {})
-      }, 5500)
+        exec(`su -c adb shell "am start -n tw.nekomimi.nekogram/org.telegram.ui.LaunchActivity"`, (error, stdout, stderr) => {})
+        exec(`su -c adb shell "am start -n tw.nekomimi.nekogram/org.telegram.ui.LaunchActivity"`, (error, stdout, stderr) => {})
+      }, 6000)
     })
   })
 }

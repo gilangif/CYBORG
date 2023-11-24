@@ -196,46 +196,51 @@ const executeQueue = async () => {
 }
 
 const task = async (data) => {
-  const { exec } = require("child_process")
+  try {
+    const { exec } = require("child_process")
 
-  console.log("\n\x1b[32m# Process", count, "\x1b[0m\n")
-  count++
+    console.log("\n\x1b[32m# Process", count, "\x1b[0m\n")
+    count++
 
-  if (!loggingLink[data.url]) {
-    processReply = data.ctx
-    processMessage = data.message
-    processLink = data.url
+    if (!loggingLink[data.url]) {
+      processReply = data.ctx
+      processMessage = data.message
+      processLink = data.url
 
-    await new Promise((resolve) => {
-      exec(`su -c sh /sdcard/power.sh`, (error, stdout, stderr) => {
-        exec(`su -c am start -a android.intent.action.VIEW -d https://${data.url}`, (error, stdout, stderr) => {
-          processDelay = setTimeout(() => {
-            processMode = "WAITING MODE"
-            resolve()
-          }, 5500)
-
-          processChecker = setInterval(() => {
-            if (processStatus) {
-              processMode = "SKIP MODE"
+      await new Promise((resolve) => {
+        exec(`su -c sh /sdcard/power.sh`, (error, stdout, stderr) => {
+          exec(`su -c am start -a android.intent.action.VIEW -d https://${data.url}`, (error, stdout, stderr) => {
+            processDelay = setTimeout(() => {
+              processMode = "WAITING MODE"
               resolve()
-            }
-          }, 500)
+            }, 5500)
+
+            processChecker = setInterval(() => {
+              if (processStatus) {
+                processMode = "SKIP MODE"
+                resolve()
+              }
+            }, 500)
+          })
         })
       })
-    })
 
-    processStatus = false
+      processStatus = false
 
-    // exec(`su -c am start -n com.termux/com.termux.app.TermuxActivity`, (error, stdout, stderr) => {})
-    // exec(`su -c am start -n com.termux/com.termux.app.TermuxActivity`, (error, stdout, stderr) => {})
+      // exec(`su -c am start -n com.termux/com.termux.app.TermuxActivity`, (error, stdout, stderr) => {})
+      // exec(`su -c am start -n com.termux/com.termux.app.TermuxActivity`, (error, stdout, stderr) => {})
 
-    exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
-    exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
+      exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
+      exec(`su -c am start -n org.telegram.messenger/org.telegram.ui.LaunchActivity`, (error, stdout, stderr) => {})
 
-    clearTimeout(processDelay)
-    clearInterval(processChecker)
-  } else {
-    console.log("\n\x1b[34m# DUPLICATE LINK\x1b[0m")
+      clearTimeout(processDelay)
+      clearInterval(processChecker)
+    } else {
+      data.ctx.reply("Oopss Duplicate !")
+      console.log("\n\x1b[34m# DUPLICATE LINK\x1b[0m")
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
 
